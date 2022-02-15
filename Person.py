@@ -2,11 +2,11 @@ from Entity import Entity
 # from Object import Object
 
 class Person(Entity):
-    def __init__(self, IMAGE_LOCATION, WIDTH, HEIGHT, X_COORD, Y_COORD, name):
-        Entity.__init__(self, IMAGE_LOCATION, WIDTH, HEIGHT, X_COORD, Y_COORD)
-        self.name = name
+    def __init__(self, WIDTH, HEIGHT, X_COORD, Y_COORD, NAME):
+        Entity.__init__(self, WIDTH, HEIGHT, X_COORD, Y_COORD, NAME)
+        self.name = NAME
         # self.objects = []
-        self.facing = ""
+        self.moving = 0
 
     def direction():
         pass
