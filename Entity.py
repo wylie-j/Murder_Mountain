@@ -32,6 +32,9 @@ class Entity:
         self.rect = pygame.Rect(X_COORD, Y_COORD, WIDTH, HEIGHT)
         self.current_image = 0
 
+    def getEdges(self, up, right, down, left):
+        return (self.rect.y - up, self.rect.x + self.width + right, self.rect.y + self.height + down, self.rect.x - left)
+
     def move():
         pass
         # furniture & Player will have to override this function

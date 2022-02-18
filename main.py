@@ -8,12 +8,10 @@ from pydoc import doc
 import pygame
 import os
 from Entity import Entity
+from Person import Person
+from NPC import NPC
 from Player import Player
 from Room import Room
-
-# TODO:
-# Figure out how to import modules
-# Determine if entities will be able to draw themselves
 
 VIEWPORT_WIDTH, VIEWPORT_HEIGHT = 1250, 720
 WIN = pygame.display.set_mode((VIEWPORT_WIDTH, VIEWPORT_HEIGHT))
@@ -36,43 +34,16 @@ PERSON_WIDTH = 100
 
 def drawFunction(room, character):
     # Every 15 frames the character will change their image to look like they're stepping
-    WIN.blit(room.image, (0,0))
+    WIN.blit(room.getImage(), (0,0))
+    WIN.blit(room.person_list[0].images[0], (room.person_list[0].rect.x, room.person_list[0].rect.y))
     if character.moving < 15:
         WIN.blit(character.images[character.current_image], (character.rect.x, character.rect.y))
     elif character.moving >= 15:
         WIN.blit(character.images[character.current_image +1], (character.rect.x, character.rect.y))
 
-def personAction(keys_pressed, person):
-    # Counter used for stepping animation
-    if keys_pressed[pygame.K_w] or keys_pressed[pygame.K_a] or keys_pressed[pygame.K_s] or keys_pressed[pygame.K_d]:
-        person.moving = (person.moving + 1) % 30
-    else:
-        person.moving = 0
-
-    # Running
-    if keys_pressed[pygame.K_LSHIFT] or keys_pressed[pygame.K_RSHIFT]:
-        VELOCITY = 10
-    else:
-        VELOCITY = 5
-
-    # This section is dependant on how we loaded the images
-    # The order is front(0), front stepping(1), back(2), 
-    # back stepping(3), left(4), left stepping(5), right(6), right stepping(7)
-    if keys_pressed[pygame.K_w] and person.rect.y > 0:
-        person.rect.y -= VELOCITY
-        person.current_image = 2
-    if keys_pressed[pygame.K_s] and person.rect.y < VIEWPORT_HEIGHT - PERSON_HEIGHT:
-        person.rect.y += VELOCITY
-        person.current_image = 0
-    if keys_pressed[pygame.K_a] and person.rect.x > 0:
-        person.rect.x -= VELOCITY
-        person.current_image = 4
-    if keys_pressed[pygame.K_d] and person.rect.x < VIEWPORT_WIDTH - PERSON_WIDTH:
-        person.rect.x += VELOCITY
-        person.current_image = 6
-
 def main():
-    room = Room(['ParkingLot.jpg'], VIEWPORT_WIDTH, VIEWPORT_HEIGHT)
+    room = Room(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, "ParkingLot")
+    room.person_list.append(NPC(100, 100, 600, 100, 'Gary'))
     character = createPlayer()
     clock = pygame.time.Clock()
     run = True
@@ -82,7 +53,7 @@ def main():
             if event.type ==pygame.QUIT:
                 run = False
         keys_pressed = pygame.key.get_pressed()
-        personAction(keys_pressed, character)    
+        character.move(keys_pressed, room)    
         WIN.fill(WHITE)
         drawFunction(room, character)
         pygame.display.update()

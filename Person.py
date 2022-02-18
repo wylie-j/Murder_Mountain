@@ -7,6 +7,7 @@ class Person(Entity):
         self.name = NAME
         # self.objects = []
         self.moving = 0
+        self.velocity = 5
 
     def direction():
         pass
