@@ -2,7 +2,7 @@ from email.mime import image
 import pygame
 import os
 
-# This function loads a list of images for an entity
+# This function creates a list of strings with the names of all the images for a character
 # The order is front, front stepping, back, back stepping, left, left stepping, right, right stepping
 def imageFileLoader(entity_name):
     if os.path.exists('Assets/' + entity_name + 'Front.png'):
@@ -16,6 +16,7 @@ def imageFileLoader(entity_name):
         images = [entity_name + '.png']
     return images
 
+# This function creates a list of images with a specified height & width given a list of image file names
 def imageMaker(IMAGE_LIST, WIDTH, HEIGHT):
     image_list = []
     for IMAGE in IMAGE_LIST:
@@ -32,6 +33,7 @@ class Entity:
         self.rect = pygame.Rect(X_COORD, Y_COORD, WIDTH, HEIGHT)
         self.current_image = 0
 
+    # The parameters are for specifying if the entity is trying to move
     def getEdges(self, up, right, down, left):
         return (self.rect.y - up, self.rect.x + self.width + right, self.rect.y + self.height + down, self.rect.x - left)
 
