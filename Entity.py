@@ -32,8 +32,9 @@ class Entity:
         self.rect = pygame.Rect(X_COORD, Y_COORD, WIDTH, HEIGHT)
         self.current_image = 0
 
-    def getEdges(self, up, right, down, left):
-        return (self.rect.y - up, self.rect.x + self.width + right, self.rect.y + self.height + down, self.rect.x - left)
+    # Top, Right, Down, Left (like a clock)
+    def getEdges(self, direction, velocity):
+        return (self.rect.y, self.rect.x + self.width, self.rect.y + self.height, self.rect.x, direction, velocity)
 
     def move():
         pass

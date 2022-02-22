@@ -6,7 +6,27 @@ class Player(Person):
     def __init__(self, WIDTH, HEIGHT, X_COORD, Y_COORD, NAME):
         Person.__init__(self, WIDTH, HEIGHT, X_COORD, Y_COORD, NAME)
 
-    def move(self, keys_pressed, room):
+    def move(self, direction, velocity):
+        if direction == "up":
+            self.rect.y += velocity
+        if direction == "right":
+            self.rect.x += velocity
+        if direction == "down":
+            self.rect.y += velocity
+        if direction == "left":
+            self.rect.x += velocity
+
+    def look(self, direction):
+        if direction == "up":
+            self.current_image = 2
+        elif direction == "right":
+            self.current_image = 6
+        elif direction == "down":
+            self.current_image = 0
+        elif direction == "left":
+            self.current_image = 4
+
+    def moove(self, keys_pressed, room):
         # Counter used for stepping animation
         VIEWPORT_HEIGHT = 720
         VIEWPORT_WIDTH = 1250

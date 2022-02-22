@@ -12,6 +12,7 @@ from Person import Person
 from NPC import NPC
 from Player import Player
 from Room import Room
+from Controller import Controller
 
 VIEWPORT_WIDTH, VIEWPORT_HEIGHT = 1250, 720
 WIN = pygame.display.set_mode((VIEWPORT_WIDTH, VIEWPORT_HEIGHT))
@@ -43,8 +44,9 @@ def drawFunction(room, character):
 
 def main():
     room = Room(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, "ParkingLot")
-    room.person_list.append(NPC(100, 100, 600, 100, 'Gary'))
+    room.person_list.append(NPC(100, 100, 600, 300, 'Gary'))
     character = createPlayer()
+    controller = Controller([room], character)
     clock = pygame.time.Clock()
     run = True
     while run:
@@ -53,7 +55,8 @@ def main():
             if event.type ==pygame.QUIT:
                 run = False
         keys_pressed = pygame.key.get_pressed()
-        character.move(keys_pressed, room)    
+        # character.move(keys_pressed, room)
+        controller.checkForActions(keys_pressed)
         WIN.fill(WHITE)
         drawFunction(room, character)
         pygame.display.update()
