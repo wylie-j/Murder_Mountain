@@ -7,7 +7,17 @@ class Person(Entity):
         self.name = NAME
         # self.objects = []
         self.moving = 0
-        self.velocity = 5
 
-    def direction():
-        pass
+    def getImage(self):
+        image_number = 0
+        if self.facing == "up":
+            image_number = 0
+        elif self.facing == "right":
+            image_number = 2
+        elif self.facing == "down":
+            image_number = 4
+        elif self.facing == "left":
+            image_number = 6
+        if self.moving >= 15:
+            image_number += 1
+        return self.images[image_number]

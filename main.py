@@ -26,11 +26,11 @@ FPS = 60
 #     return pygame.transform.scale(temp_img, (image_width, image_height))
 
 def createPlayer():
-    return Player(100, 100, 300, 100, 'Gary')
+    return Player(100, 100, 200, 100, 'Gary')
 
 def createRoom():
     room = Room(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, "ParkingLot")
-    room.person_list.append(NPC(100, 100, 600, 300, 'Gary'))
+    room.NPC_list.append(NPC(100, 100, 600, 300, 'Gary'))
     return room
 
 PERSON_HEIGHT = 100
@@ -40,13 +40,10 @@ def drawFunction(room, character):
     #draw the room
     WIN.blit(room.getImage(), (0,0))
     # draw all the people in the room
-    for person in room.person_list:
-        WIN.blit(person.images[0], (person.rect.x, person.rect.y))
+    for person in room.NPC_list:
+        WIN.blit(person.getImage(), person.getCoords())
     # Every 15 frames the character will change their image to look like they're stepping
-    if character.moving < 15:
-        WIN.blit(character.images[character.current_image], (character.rect.x, character.rect.y))
-    elif character.moving >= 15:
-        WIN.blit(character.images[character.current_image +1], (character.rect.x, character.rect.y))
+    WIN.blit(character.getImage(), character.getCoords())
 
 def main():
     room = createRoom() 
@@ -63,7 +60,6 @@ def main():
         keys_pressed = pygame.key.get_pressed()
         # character.move(keys_pressed, room)
         controller.checkForActions(keys_pressed)
-        WIN.fill(WHITE)
         drawFunction(room, character)
         pygame.display.update()
 

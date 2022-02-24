@@ -3,10 +3,10 @@ import pygame
 import os
 
 # This function creates a list of strings with the names of all the images for a character
-# The order is front, front stepping, back, back stepping, left, left stepping, right, right stepping
+# The order is back, back stepping, right, right stepping, front, front stepping, left, left stepping
 def imageFileLoader(entity_name):
     if os.path.exists('Assets/' + entity_name + 'Front.png'):
-        images = [entity_name + 'Front', entity_name + 'Back', entity_name + 'Left', entity_name + 'Right']
+        images = [entity_name + 'Back', entity_name + 'Right', entity_name + 'Front', entity_name + 'Left']
         i = 0
         while i < len(images):
             images.insert(i + 1, images[i] + "Stepping.png")
@@ -32,11 +32,26 @@ class Entity:
         self.images = imageMaker(IMAGE_LIST, WIDTH, HEIGHT)
         self.rect = pygame.Rect(X_COORD, Y_COORD, WIDTH, HEIGHT)
         self.current_image = 0
+        self.facing = "down"
 
     # Top, Right, Down, Left (like a clock)
     def getEdges(self, direction, velocity):
         return (self.rect.y, self.rect.x + self.width, self.rect.y + self.height, self.rect.x, direction, velocity)
 
-    def move():
-        pass
-        # furniture & Player will have to override this function
+    def getCoords(self):
+        return (self.rect.x, self.rect.y)
+
+    def move(self, direction, velocity):
+        if direction == "up" or direction == "down":
+            self.rect.y += velocity
+        if direction == "right" or direction == "left":
+            self.rect.x += velocity
+
+    def look(self, direction):
+        if direction == "up" or direction == "right" or direction == "down" or direction == "left":
+            self.facing = direction
+        else:
+            self.facing = "down"
+    
+    def interact(self):
+        print("you are interacting with an entity")
