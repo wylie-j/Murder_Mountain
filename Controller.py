@@ -1,4 +1,5 @@
 import imp
+# from types import NoneType
 import pygame
 from Room import Room
 from CollisionDetector import CollisionDetector
@@ -42,8 +43,9 @@ class Controller:
             self.player.move(key, velocity)
 
         if keys_pressed[pygame.K_e]:
-            pass
-            # self.isLookingAt(self.player)
+            entity = self.isLookingAt(self.player)
+            if type(entity) != type(None):
+                return entity
 
     def checkCollisions(self, entity_edges):
         available_velocity = self.collision_detector.inBounds(entity_edges, self.current_room.getEdges())
@@ -56,7 +58,7 @@ class Controller:
                     available_velocity = temp_velocity
         return available_velocity
 
-    def isLookingAt(self):
-        for entity in self.current_room.getEntities():
-            pass
-            # if self.collision_detector.collides()
+    def isLookingAt(self, entity1):
+        for entity2 in self.current_room.getEntities():
+            if self.collision_detector.collides(entity1.getEdges(entity1.facing, 20), entity2.getEdges(entity2.facing,0)) == 0:
+                return entity2
